@@ -1,7 +1,7 @@
 ## getting started
 ```
 npm ci
-node addon.js
+node src/addon.js
 ```
 
 ## instructions
