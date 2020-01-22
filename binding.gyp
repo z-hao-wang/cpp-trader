@@ -12,11 +12,12 @@
     },
     {
       "target_name": "py",
-      "cflags!": [ "-fno-exceptions" ],
-      "cflags_cc!": [ "-fno-exceptions" ],
+      "cflags!": [ "-fno-exceptions", "-framework Python" ],
+      "cflags_cc!": [ "-fno-exceptions", "-framework Python" ],
       "sources": [ "src/python.cc", "src/pythonStrategy/pythontrader.cc" ],
       "include_dirs": [
-        "<!@(node -p \"require('node-addon-api').include\")"
+        "<!@(node -p \"require('node-addon-api').include\")",
+        "<!(echo $PYTHON_INCLUDE)"
       ],
       'defines': [ 'NAPI_DISABLE_CPP_EXCEPTIONS' ],
     }

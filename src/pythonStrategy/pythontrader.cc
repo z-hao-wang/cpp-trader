@@ -1,4 +1,6 @@
-#include "pythonTrader.h"
+#include "pythontrader.h"
+#include <iostream>
+#include <Python.h>
 using namespace Napi;
 
 Napi::FunctionReference PythonTrader::constructor;
@@ -16,7 +18,11 @@ Napi::Object PythonTrader::Init(Napi::Env env, Napi::Object exports) {
 
   constructor = Napi::Persistent(func);
   constructor.SuppressDestruct();
-
+  Py_Initialize();
+    if (!Py_IsInitialized())
+    {
+        std::cout << "Python initialization failed!\n";
+    }
   exports.Set("PythonTrader", func);
   return exports;
 }
