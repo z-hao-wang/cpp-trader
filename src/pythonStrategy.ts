@@ -1,4 +1,4 @@
-const cpp = require('bindings')('cpp');
+const py = require('bindings')('py');
 import {
     SimContractEx,
     TraderUltraTfClass,
@@ -61,7 +61,7 @@ const cppWrapper: StrategyType = {
         return winloss.winLossRatio;
     },
     init: (options: TraderUltraTfClass) => {
-        options.cpp = new cpp.CppTrader(0);
+        options.py = new py.PythonTrader(0);
     },
     onComplete: (options: TraderUltraTfClass) => {
         console.log(`gain loss getHistogram`, options.se.getGainLossHistogram());
@@ -72,7 +72,7 @@ const cppWrapper: StrategyType = {
         orders: SimContractEx.PendingOrderParams[],
         options: TraderUltraTfClass,
     ) => {
-        const instructions = options.cpp.receiveTrade(trade, positionToCpp(position), orders);
+        const instructions = options.py.receiveTrade(trade, positionToCpp(position), orders);
         return instructions;
     },
     onReceiveOb: (
@@ -81,7 +81,7 @@ const cppWrapper: StrategyType = {
         orders: SimContractEx.PendingOrderParams[],
         options: TraderUltraTfClass,
     ) => {
-        return options.cpp.receiveOb(ob, positionToCpp(position), orders);
+        return options.py.receiveOb(ob, positionToCpp(position), orders);
     },
 };
 export default cppWrapper;

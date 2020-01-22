@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const cpp = require('bindings')('cpp');
+const py = require('bindings')('py');
 const noPosition = {
     side: 0,
     amountCurrency: 0,
@@ -48,17 +48,17 @@ const cppWrapper = {
         return winloss.winLossRatio;
     },
     init: (options) => {
-        options.cpp = new cpp.CppTrader(0);
+        options.py = new py.PythonTrader(0);
     },
     onComplete: (options) => {
         console.log(`gain loss getHistogram`, options.se.getGainLossHistogram());
     },
     onReceiveTrade: (trade, position, orders, options) => {
-        const instructions = options.cpp.receiveTrade(trade, positionToCpp(position), orders);
+        const instructions = options.py.receiveTrade(trade, positionToCpp(position), orders);
         return instructions;
     },
     onReceiveOb: (ob, position, orders, options) => {
-        return options.cpp.receiveOb(ob, positionToCpp(position), orders);
+        return options.py.receiveOb(ob, positionToCpp(position), orders);
     },
 };
 exports.default = cppWrapper;

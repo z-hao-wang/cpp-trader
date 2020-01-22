@@ -51,7 +51,7 @@ const data = {
     fundingInfo: [],
     traderOptions: {
         basePath: '@src',
-        version: 'cppStrategy',
+        version: 'pythonStrategy',
         isBackTest: true,
         startingPrinciple: 10,
         isFittingOnly: false,
