@@ -25,7 +25,7 @@ the easiest way is to run in docker.
 
 first build it.
 ```
-docker build -t cpptrader:master .
+bash ops/buildDocker.sh master
 ```
 
 Then make any changes in pythonSrc/ and run it again
