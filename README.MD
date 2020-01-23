@@ -22,6 +22,7 @@ node-gyp rebuild && npm run tsc && node src/mainCpp.js
 ## python trader
 similar concept with c++ trader, can write core strategy in python. python file in pythonSrc/
 the easiest way is to run in docker.
+These commands works in mac, and probably work in linux. 
 
 first build it.
 ```
