@@ -60,3 +60,6 @@ typings/
 
 #webstorm 
 .idea/
+
+src/**/*.js
+pythonSrc/__pycache__
