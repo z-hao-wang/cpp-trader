@@ -48,4 +48,4 @@ COPY data /app/data
 
 RUN node-gyp rebuild && npm run tsc
 
-ENTRYPOINT node src/main.js
+ENTRYPOINT node src/mainPython.js
