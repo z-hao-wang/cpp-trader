@@ -62,3 +62,4 @@ typings/
 .idea/
 
 src/**/*.js
+pythonSrc/__pycache__

@@ -41,7 +41,7 @@ const cppWrapper: StrategyType = {
     ],
     params: [
         {
-            key: 'inteParam',
+            key: 'intParam',
             max: 100,
             min: 1,
             type: 'integer',
