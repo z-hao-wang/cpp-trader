@@ -4,6 +4,7 @@ npm ci
 npm run tsc
 node src/main.js
 ```
+Note: you will need special access to basic-backtest repo.
 
 ## c++ trader
 this repo is for integrating with trading framework.
