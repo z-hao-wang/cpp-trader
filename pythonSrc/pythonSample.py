@@ -6,8 +6,12 @@ class Trader:
         # save initial values
 
     def receiveTrade(self, trade, position, orders):
+        time = trade[0]
+        side = trade[1] # 0 = buy, 1 = sell
         price = trade[2]
+        amount = trade[3] # in btc
         if position is None:
+        # all instructions can be viewed at https://bitbucket.org/whateverhow/basic-backtest/src/master/src/types/instruction.ts
             return [{
                 "op": "cancelAllOrders"
             }, {
@@ -39,6 +43,14 @@ class Trader:
     #   bids: {r: number, a: number}[];
     #   asks: {r: number, a: number}[];
     # }
+
+    # position { amountOriginal?: number;
+    #               amountClosed?: number;
+    #               amountCurrency: number; // amount remaining
+    #               side: 'buy' | 'sell';
+    #               price: number;
+    #               pairDb: string;
+    #               }
     def receiveOb(self, ob, position, orders):
         return []
 
