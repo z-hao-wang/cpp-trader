@@ -1,5 +1,5 @@
 {
-  "name": "object_wrap",
+  "name": "leo-trader",
   "version": "0.0.0",
   "description": "Node.js Addons Example #6",
   "main": "addon.js",
@@ -14,13 +14,14 @@
     "@src": "src"
   },
   "dependencies": {
-    "basic-backtest": "git+ssh://git@bitbucket.org/whateverhow/basic-backtest.git#6dfbe354e5ff5c0cb6b897861d229dfef78e5cb0",
+    "basic-backtest": "git+ssh://git@bitbucket.org/whateverhow/basic-backtest.git#master",
     "bindings": "~1.2.1",
-    "module-alias": "^2.2.2",
+    "lodash": "^4.17.15",
     "node-addon-api": "^1.0.0",
     "typescript": "^3.7.4"
   },
   "devDependencies": {
+    "@types/lodash": "^4.14.149",
     "@types/node": "^13.1.8"
   }
 }

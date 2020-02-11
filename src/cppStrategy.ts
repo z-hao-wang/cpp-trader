@@ -1,11 +1,12 @@
 const cpp = require('bindings')('cpp');
 import {
-    SimContractEx,
     TraderUltraTfClass,
     OrderBookSchema,
     ParamConfig,
     TradeDbSchemaV2,
     StrategyType,
+    ExistingOrderResponse,
+    ODSim,
 } from 'basic-backtest';
 
 const noPosition = {
@@ -15,7 +16,7 @@ const noPosition = {
     pair: 0,
 };
 
-function positionToCpp(position: SimContractEx.Position | null) {
+function positionToCpp(position: ODSim.Position | null) {
     if (!position) return noPosition;
     return {
         ...position,
@@ -53,7 +54,7 @@ const cppWrapper: StrategyType = {
             type: 'float',
         },
     ] as ParamConfig[],
-    processRawObs: (obs: OrderBookSchema[]) => {
+    processRawOb: (ob: OrderBookSchema) => {
 
     },
     getFitnessMetric: (options: TraderUltraTfClass) => {
@@ -64,12 +65,11 @@ const cppWrapper: StrategyType = {
         options.cpp = new cpp.CppTrader(0);
     },
     onComplete: (options: TraderUltraTfClass) => {
-        console.log(`gain loss getHistogram`, options.se.getGainLossHistogram());
     },
     onReceiveTrade: (
         trade: TradeDbSchemaV2,
-        position: SimContractEx.Position | null,
-        orders: SimContractEx.PendingOrderParams[],
+        position: ODSim.Position | null,
+        orders: ExistingOrderResponse[],
         options: TraderUltraTfClass,
     ) => {
         const instructions = options.cpp.receiveTrade(trade, positionToCpp(position), orders);
@@ -77,8 +77,8 @@ const cppWrapper: StrategyType = {
     },
     onReceiveOb: (
         ob: OrderBookSchema,
-        position: SimContractEx.Position | null,
-        orders: SimContractEx.PendingOrderParams[],
+        position: ODSim.Position | null,
+        orders: ExistingOrderResponse[],
         options: TraderUltraTfClass,
     ) => {
         return options.cpp.receiveOb(ob, positionToCpp(position), orders);

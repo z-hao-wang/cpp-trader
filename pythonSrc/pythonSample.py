@@ -32,7 +32,13 @@ class Trader:
                 "price": newPrice,
                 "amountCurrency": position.get("amountCurrency"),
             }]
-        
+    #interface OrderBookSchema {
+    #   ts: Date; // server timestamp
+    #   exchange?: string;
+    #   pair?: string;
+    #   bids: {r: number, a: number}[];
+    #   asks: {r: number, a: number}[];
+    # }
     def receiveOb(self, ob, position, orders):
         return []
 

@@ -1,14 +1,17 @@
 const py = require('bindings')('py');
 import {
-    SimContractEx,
+    ODSim,
     TraderUltraTfClass,
     OrderBookSchema,
     ParamConfig,
     TradeDbSchemaV2,
     StrategyType,
+    ExistingOrderResponse,
+    obDataUtils
 } from 'basic-backtest';
+import * as dataProcessingUtils from './utils/dataProcessingUtils';
 
-const cppWrapper: StrategyType = {
+const pythonWrapper: StrategyType = {
     constants: [
         {
             key: 'placeOrderGap',
@@ -37,37 +40,40 @@ const cppWrapper: StrategyType = {
             type: 'float',
         },
     ] as ParamConfig[],
-    processRawObs: (obs: OrderBookSchema[]) => {
-
+    processRawOb: (ob: OrderBookSchema, options: TraderUltraTfClass) => {
+        // this is where we do some order book processing.
+        obDataUtils.trimObLevel(ob, 5);
+        if (!options.isBackTesting) {
+            dataProcessingUtils.convertObAmountToBtcNotion(ob);
+        }
     },
     getFitnessMetric: (options: TraderUltraTfClass) => {
-        const winloss = options.getGainLossCount();
-        return winloss.winLossRatio;
+        // const winloss = options.getGainLossCount();
+        // return winloss.winLossRatio;
+        return options.se.getAsset(options.pairDb);
     },
     init: (options: TraderUltraTfClass) => {
         options.py = new py.PythonTrader("pythonSample");
     },
     onComplete: (options: TraderUltraTfClass) => {
-        console.log(`gain loss getHistogram`, options.se.getGainLossHistogram());
     },
     onReceiveTrade: (
         trade: TradeDbSchemaV2,
-        position: SimContractEx.Position | null,
-        orders: SimContractEx.PendingOrderParams[],
+        position: ODSim.Position | null,
+        orders: ExistingOrderResponse[],
         options: TraderUltraTfClass,
     ) => {
         const instructions = options.py.receiveTrade(JSON.stringify({trade, position, orders}));
-        
         return JSON.parse(instructions);
     },
     onReceiveOb: (
         ob: OrderBookSchema,
-        position: SimContractEx.Position | null,
-        orders: SimContractEx.PendingOrderParams[],
+        position: ODSim.Position | null,
+        orders: ExistingOrderResponse[],
         options: TraderUltraTfClass,
     ) => {
         const instructions = options.py.receiveOb(JSON.stringify({ob, position, orders}));
         return JSON.parse(instructions);
     },
 };
-export default cppWrapper;
+export default pythonWrapper;
